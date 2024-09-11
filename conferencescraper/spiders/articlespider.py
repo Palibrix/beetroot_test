@@ -38,19 +38,16 @@ class ArticlespiderSpider(scrapy.Spider):
         affiliations_dict = {}
         affiliations_list = re.split(r'(\d+)', affiliations)
         if len(affiliations_list) > 1:
-            counter = 1
             for i in range(1, len(affiliations_list), 2):
-                key = str(counter)
+                key = affiliations_list[i]
                 value = affiliations_list[i + 1]
                 value = value.replace('and', '')
                 value = value.strip()
                 affiliations_dict[key] = value
-                counter += 1
             return affiliations_dict
         else:
             return affiliations_list
 
-    # @staticmethod
     def store_data(self, names, affiliations):
         complete_set = {}
         affiliations_dict = self.split_affiliations(affiliations)
@@ -106,7 +103,7 @@ class ArticlespiderSpider(scrapy.Spider):
                         text += text_and_font[i][0]
                         i += 1
                     item = {'session_name': session_name, 'title': title,
-                            'name_and_affiliation': self.store_data(names, affiliation), 'text': text}
+                            'name_and_affiliation': self. store_data(names, affiliation), 'text': text}
                     yield item
 
                 else:
